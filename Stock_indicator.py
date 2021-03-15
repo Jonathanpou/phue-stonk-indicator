@@ -11,20 +11,28 @@ green = [0.11500021676131911, 0.8155333283841992]
 
 
 def set_light(color):
-        b.set_light(6, 'bri', 254)
-        b.set_light(6, 'xy', color)
+        b.set_light(4, 'bri', 254)
+        b.set_light(4, 'xy', color)
+
+stock = "NEL.OL"
 
 
 last_price = 0
 last_state = None
 
 while True:
-	price = si.get_live_price("XELA")
+        #get price og the stock in real time
+	price = si.get_live_price(stock)
+	#reducing the decimals from like a 100 to max 3
 	redu = str(round(price, 3))
 	state = None
+        #printing the formated stock price 
+	print(stock + ": {} ".format(redu))
+	#waits 10 sec before printing the next price not to strees the connection to Yahoo Finance
+	time.sleep(10)
 
-	print("XELA: {} ".format(redu))
-
+	
+#Light controller
 	if price >= last_price:
 		state = True
 		set_light(green)
