@@ -1,0 +1,36 @@
+import cryptocompare
+from phue import Bridge
+import time
+from playsound import playsound
+
+b = Bridge('192.168.8.111') # Bridge IP
+
+b.connect()
+
+red = [0.7350000508904126, 0.24174193816705097]
+green = [0.11500021676131911, 0.8155333283841992]
+
+lamp = 6
+
+def set_light(color):
+    b.set_light(lamp, 'bri', 254)
+    b.set_light(lamp, 'xy', color)
+
+
+coin = "LUNA"
+currency = 'USD'
+
+
+
+while True:
+    price_dict = cryptocompare.get_price(coin, currency=currency)
+    price = price_dict[coin][currency]
+    print(price)
+    time.sleep(5)
+
+
+    if price <= 0.000170:
+        set_light(red)
+        playsound('Alarm.mp3')
+
+
